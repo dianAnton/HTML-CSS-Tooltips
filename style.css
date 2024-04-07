@@ -1,0 +1,74 @@
+*
+{
+    box-sizing: border-box;
+}
+
+body
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.img
+{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url("assets/img-1.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Tooltip Implementation */
+.img::before, .img::after
+{   
+    --tooltip-color: rgb(90, 85, 85);
+
+    --scale: 0;
+    position: absolute;
+    top: -.25rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+    transition: 90ms transform;
+    transform-origin: bottom center;
+}
+
+.img::before
+{   
+    --translate-y: calc(-100% - 10px);
+
+    background: var(--tooltip-color);
+    padding: .5rem;
+
+    /* Get HTML attribute */
+    content: attr(data-tooltip);
+
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    width: max-content;
+    max-width: 100%;
+    border-radius: .3rem;
+    text-align: center;
+}
+
+.img:hover::before, .img:hover::after
+{
+    --scale: 1
+}
+
+.img::after
+{  
+    --translate-y: calc(-1 * 10px);
+
+    content: '';
+
+    /* Creates an inverted pyramid */
+    border: 10px solid transparent;
+    border-top-color: var(--tooltip-color);
+
+    transform-origin: top center;
+}
